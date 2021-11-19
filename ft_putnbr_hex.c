@@ -1,25 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_c.c                                          :+:      :+:    :+:   */
+/*   ft_putnbr_hex.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bgales <bgales@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/12 15:05:10 by bgales            #+#    #+#             */
-/*   Updated: 2021/11/12 15:23:45 by bgales           ###   ########.fr       */
+/*   Created: 2021/11/13 13:27:49 by bgales            #+#    #+#             */
+/*   Updated: 2021/11/14 00:44:24 by bgales           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./LIBFT/libft.h"
-#include "libftprintf.h"
+#include "ft_printf.h"
 
-int	print_c(const char *str)
+void	ft_putnbr_hex(unsigned long toconvert, unsigned int *counter, char maj)
 {
-	unsigned int	i;
-	va_list			ap;
+	char	*set;
 
-	va_start(ap, str);
-	va_arg(ap, int);
-	write(1, i, 1);
-	va_end(ap);
+	if (maj == 'X')
+	{
+		set = "0123456789ABCDEF";
+	}
+	else
+		set = "0123456789abcdef";
+	if (toconvert > 16)
+	{
+		ft_putnbr_hex((toconvert / 16), counter, maj);
+		ft_putnbr_hex((toconvert % 16), counter, maj);
+	}
+	else
+	{
+		*counter += write(1, &set[toconvert], 1);
+	}
+	return ;
 }

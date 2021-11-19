@@ -1,6 +1,10 @@
-NAME= libftprintf.a
+NAME= ft_printf.hf.a
 
-SOURCES=print_c.c \
+SOURCES=ft_printf.c \
+ft_printf_str.c \
+ft_itoa.c \
+ft_putnbr_hex.c \
+ft_putnbr.c \
 
 
 OBJS=	$(SOURCES:.c=.o)

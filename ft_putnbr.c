@@ -1,29 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libftprintf.h                                      :+:      :+:    :+:   */
+/*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bgales <bgales@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/23 21:06:32 by bgales            #+#    #+#             */
-/*   Updated: 2021/11/12 15:13:34 by bgales           ###   ########.fr       */
+/*   Created: 2021/11/13 23:08:15 by bgales            #+#    #+#             */
+/*   Updated: 2021/11/14 00:53:53 by bgales           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFTPRINTF_H
-# define LIBFTPRINTF_H
+#include "ft_printf.h"
 
-# include <string.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <stdarg.h>
-# include "./LIBFT/libft.h"
-
-typedef struct s_list
+void	ft_putnbr(unsigned int toconvert, unsigned int *counter)
 {
-	void			*content;
-	struct s_list	*next;
-}	t_list;
+	char	*set;
 
-int	print_c(const char *str);
-#endif
+	set = "0123456789";
+	if (toconvert > 9)
+	{
+		ft_putnbr((toconvert / 10), counter);
+		ft_putnbr((toconvert % 10), counter);
+	}
+	else
+	{
+		*counter += write(1, &set[toconvert], 1);
+	}
+	return ;
+}

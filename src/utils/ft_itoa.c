@@ -6,13 +6,13 @@
 /*   By: bgales <bgales@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/31 15:56:21 by bgales            #+#    #+#             */
-/*   Updated: 2021/11/12 20:29:59 by bgales           ###   ########.fr       */
+/*   Updated: 2021/11/25 14:56:43 by bgales           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./LIBFT/libft.h"
+#include "ft_printf.h"
 
-int	getmalloc(int n)
+static int	getmalloc(int n)
 {
 	int		i;
 
@@ -27,7 +27,7 @@ int	getmalloc(int n)
 	return (i);
 }
 
-int	isneg(int n, int sign)
+static int	isneg(int n, int sign)
 {
 	if (n < 0)
 		sign = 1;
@@ -56,7 +56,7 @@ char	*ft_itoa(int n)
 		if (!sign)
 			converted_str[divider - i - 1] = (n % 10) + 48;
 		if (sign)
-			converted_str[divider - i] = (10 - (n % 10) + '0' - 10 );
+			converted_str[divider - i] = (10 - (n % 10) + '0' - 10);
 		n /= 10;
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: bgales <bgales@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 13:51:59 by bgales            #+#    #+#             */
-/*   Updated: 2021/11/14 10:14:56 by bgales           ###   ########.fr       */
+/*   Updated: 2021/11/25 13:35:46 by bgales           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,22 @@
 #include <unistd.h>
 #include "ft_printf.h"
 
-void	whatsinmypercent(const char *str, va_list ap, unsigned int *counter)
+int	formatfinder(const char *str, char c)
+{
+	while (*str != '\0' && *str != c)
+		str++;
+	if (*str == c)
+		return (1);
+	return (0);
+}
+
+int	whatsinmypercent(const char *str, va_list ap, unsigned int *counter)
 {
 	int	char_c;
 
+	str++;
 	if (*str == 'c')
 	{
-		str++;
 		char_c = va_arg(ap, int);
 		*counter += write(1, &char_c, 1);
 	}
@@ -28,44 +37,39 @@ void	whatsinmypercent(const char *str, va_list ap, unsigned int *counter)
 		ft_printf_str(va_arg(ap, const char *), counter);
 	if (*str == 'd' || *str == 'i')
 		ft_printf_int(va_arg(ap, int), counter);
-	if (*str == 'p' || *str == 'x' || *str == 'X')
+	if (*str == 'p')
+		ft_printf_void(str, va_arg(ap, unsigned long), counter);
+	if (*str == 'x' || *str == 'X')
 		ft_printf_void(str, va_arg(ap, unsigned long), counter);
 	if (*str == 'u')
 		ft_putnbr(va_arg(ap, unsigned int), counter);
 	if (*str == '%')
-		*counter += write(1, (const void *) '%', 1);
+			*counter += write(1, "%", 1);
+	else
+		return (1);
+	return (0);
 }
 
 int	ft_printf(const char *str, ...)
 {
 	va_list			ap;
 	unsigned int	counter;
+	unsigned int	i;
 
 	counter = 0;
+	i = 0;
 	va_start(ap, str);
-	while (*str != '\0')
+	while (str[i] != '\0')
 	{
-		if (*str == '%')
+		if (str[i] != '%')
+			counter += write(1, &str[i], 1);
+		if (str[i] == '%')
 		{
-			str++;
-			whatsinmypercent(&*str, ap, &counter);
-			str++;
+			whatsinmypercent(&str[i], ap, &counter);
+			i++;
 		}
-		counter += write(1, &*str, 1);
-		str++;
+		i++;
 	}
 	va_end(ap);
-return (counter);
-}
-
-int	main(void)
-{
-	void *str;
-	void *test;
-	unsigned int	i = 4094967296;
-
-	str = &test;
-	//printf("nombre faux printf : %d\n", ft_printf("%c\n", '0'));
-	printf("nombre vrai printf :%d\n", ft_printf("%c %c %c", '0', 'a', '9'));
-
+	return ((unsigned int)(counter));
 }

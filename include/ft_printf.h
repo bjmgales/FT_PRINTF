@@ -90,4 +90,20 @@
 **/
 int	whatsinmypercent(const char *str, va_list ap, unsigned int *counter);
 
+/**
+
+@brief Prints a formatted string to stdout.
+
+This function prints a formatted string to stdout. It accepts a variable number
+
+of arguments, which are specified in the format string using '%' format specifiers.
+
+@param str The format string to print.
+
+@param ... The variable arguments to use in the format string.
+
+@return The number of characters printed.
+*/
+int ft_printf(const char *str, ...);
+
 #endif
